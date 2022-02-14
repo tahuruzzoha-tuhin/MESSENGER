@@ -117,6 +117,7 @@ module.exports.userLogin = async (req, res) => {
     } else {
         try {
             const checkUser = await registerModel.findOne({ email: email }).select('+password')
+            console.log(checkUser);
 
             if (checkUser) {
                 const mathcPassword = await bcrypt.compare(password, checkUser.password);
