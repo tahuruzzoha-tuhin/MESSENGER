@@ -11,9 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={< Login />} />
         <Route path="/login" element={< Login />} />
-        <Route exact path="/messenger" element={<Message />}></Route>
-        {/* <Route path="/messenger" element={< Message />} /> */}
-        <Route exact path="/registration" element={<Registration />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/messenger" element={<Message />} />
       </Routes>
     </BrowserRouter>
 

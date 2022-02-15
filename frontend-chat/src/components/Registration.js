@@ -59,7 +59,7 @@ function Registration() {
     useEffect(() => {
 
         if (authenticate) {
-            // navigate('')
+            navigate('/messenger', { replace: true })
         }
         if (successMessage) {
             alert.success(successMessage);

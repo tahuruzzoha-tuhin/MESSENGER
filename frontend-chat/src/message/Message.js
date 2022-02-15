@@ -3,26 +3,22 @@ import Topbar from '../components/topbar/Topbar';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, Link, Outlet, NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import InputEmoji from "react-input-emoji";
 import FriendsChat from './FriendsChat';
 import ActiveChat from './ActiveChat';
 import ChatboxTop from './ChatboxTop';
 import ChatTopLeft from './ChatTopLeft';
 import ConversationBox from './ConversationBox';
+import { getFriends } from '../store/actions/messengerAction';
 
 function Message() {
-    let [visible, setVisible] = useState(false);
-    let [isMenuOpen, setIsMenuOpen] = useState(false);
-    let [isShow, setHidden] = useState(false);
-    let [isOpen, setOpen] = useState(false);
-    let [isMenuvisible, setMenuOpen] = useState(false);
-    let [isMenuShow, setMenuShow] = useState(false);
-    let [isBoxOpen, setBoxOpen] = useState(false);
-    //for textarea
-    const [text, setText] = useState("");
-    function handleOnEnter(text) {
-        console.log("enter", text);
-    }
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getFriends())
+    }, [])
 
     return (
         <div className="_layout_main _layout_main_wrapper _layout_chat">
@@ -68,10 +64,7 @@ function Message() {
                                             <div className="_chat_right_bottom_inner_box">
                                                 <div className="chat_bottom_textarea">
                                                     <InputEmoji
-                                                        value={text}
-                                                        onChange={setText}
-                                                        cleanOnEnter
-                                                        onEnter={handleOnEnter}
+
                                                         placeholder="Type a message"
                                                     />
                                                 </div>

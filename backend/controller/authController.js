@@ -110,18 +110,18 @@ module.exports.userLogin = async (req, res) => {
         error.push('Please provide your password')
     }
     if (email && !validator.isEmail(email)) {
-        error.push('Please provide your valid password')
+        error.push('Please provide your valid email')
     }
     if (error.length > 0) {
         res.status(400).json({ error: { errorMessage: error } })
     } else {
         try {
             const checkUser = await registerModel.findOne({ email: email }).select('+password')
-            console.log(checkUser);
+            // console.log(checkUser);
 
             if (checkUser) {
-                const mathcPassword = await bcrypt.compare(password, checkUser.password);
-                if (mathcPassword) {
+                const matchPassword = await bcrypt.compare(password, checkUser.password);
+                if (matchPassword) {
 
                     const token = jwt.sign({
                         id: checkUser._id,

@@ -14,7 +14,7 @@ export const userRegister = (data) => {
             }
         }
         try {
-            const response = await axios.post('api/messenger/user-register', data, config);
+            const response = await axios.post('/api/messenger/user-register', data, config);
 
             localStorage.setItem('authToken', response.data.token);
             dispatch({
@@ -37,6 +37,7 @@ export const userRegister = (data) => {
 }
 
 export const userLogin = (data) => {
+    // console.log(data);
     return async (dispatch) => {
 
         const config = {
@@ -45,19 +46,19 @@ export const userLogin = (data) => {
             }
         }
         try {
-            const response = await axios.post('api/messenger/user-login', data, config);
+            const response = await axios.post('/api/messenger/user-login', data, config);
             localStorage.setItem('authToken', response.data.token);
-            // console.log(response.data.token);
+            console.log(response.data.token);
             dispatch({
                 type: USER_LOGIN_SUCCESS,
                 payload: {
                     successMessage: response.data.successMessage,
-                    toke: response.data.token
+                    token: response.data.token
                 }
             })
         } catch (error) {
             // console.log(error.respo);
-            // console.log(error);
+            // console.log(error.response.data.error.errorMessage);
             dispatch({
                 type: USER_LOGIN_FAIL,
                 payload: {

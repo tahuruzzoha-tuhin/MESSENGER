@@ -6,11 +6,13 @@ import {
 } from 'redux';
 
 import authReducer from './reducers/authReducer'
+import { messengerReducer } from './reducers/messengerReducer';
 
 import thunkMiddleware from 'redux-thunk';
 
 const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    messenger: messengerReducer
 
 });
 

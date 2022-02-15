@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../store/actions/authActions';
-
+import { SUCCESS_MESSAGE_CLEAR, ERROR_MESSAGE_CLEAR } from '../store/types/authType'
+import { useAlert } from 'react-alert';
 
 
 
 function Login() {
 
+    const navigate = useNavigate();
+    const alert = useAlert();
     const dispatch = useDispatch();
     const [state, seState] = useState({
         email: '',
@@ -23,9 +26,27 @@ function Login() {
     }
 
     const login = (e) => {
-        e.preventDefault()
-        dispatch(userLogin(state))
+        e.preventDefault();
+        dispatch(userLogin(state));
     }
+
+    const { loading, successMessage, error, authenticate, myInfo } = useSelector(state => state.auth);
+    console.log(authenticate);
+
+    useEffect(() => {
+
+        if (authenticate) {
+            navigate('/messenger', { replace: true })
+        }
+        if (successMessage) {
+            alert.success(successMessage);
+            dispatch({ type: SUCCESS_MESSAGE_CLEAR })
+        }
+        if (error) {
+            error.map(err => alert.error(err));
+            dispatch({ type: ERROR_MESSAGE_CLEAR })
+        }
+    }, [successMessage, error])
 
 
     return (
@@ -81,6 +102,7 @@ function Login() {
                                                     type="password"
                                                     className="form-control _social_login_input"
                                                     onChange={inputHandle} value={state.password} name='password'
+                                                    placeholder="Enter your password"
                                                 />
                                             </div>
                                         </div>
