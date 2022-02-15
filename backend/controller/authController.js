@@ -11,9 +11,6 @@ module.exports.userRegister = (req, res) => {
     const form = formidable();
     form.parse(req, async (err, fields, files) => {
         const { userName, email, password, confirmPassword } = fields;
-        // const { image } = files;
-
-        // console.log(err);
         const error = [];
         if (!userName) {
             error.push('Please provide your user name');
@@ -43,17 +40,7 @@ module.exports.userRegister = (req, res) => {
             res.status(404).json({ error: { errorMessage: error } });
 
         } else {
-            // const getImageName = files.image.originalFilename;
-            // const randNumber = Math.floor(Math.random() * 99999);
 
-            // const newImageName = randNumber + getImageName;
-            // files.image.originalFilename = newImageName;
-
-            // console.log(files.image.originalFilename);
-            // console.log(`${files.image.filepath}/${files.image.originalFilename}`);
-            // const a = `${files.image.filepath}/${files.image.originalFilename}`;
-            // const newPath = __dirname + `/../../../frontend-chat/public/image/`;
-            // // console.log(newPath);
             try {
                 const checkUser = await registerModel.findOne({ email: email });
                 if (checkUser) {
